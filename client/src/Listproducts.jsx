@@ -1,64 +1,116 @@
-import React,{useState} from 'react'
-import Update from './Update.jsx';
-// import '../styles/Auth.css'
-import './Home.css';
+import React from 'react';
 
-
-function Listproducts({products,handleDelete,handleUpdate,changeView,getId}) {
-  // console.log("products in list",products);
- 
-  
- 
-
+function Listproducts({ products, handleDelete, handleUpdate, changeView, getId }) {
   return (
-    <div  style={{
-      display: 'flex',
-      flexWrap: 'wrap', // For cards to wrap if there are many
-      justifyContent: 'center', // Centers horizontally
-      alignItems: 'center', // Centers vertically
-      minHeight: '100vh', // Ensures full-screen height
-      backgroundColor: '#f9f9f9', // Optional background color
-    }}>
-{products.map((element,i)=>{
- const hundelAll=()=>{
-   getId(element.id)
-   return changeView("update")
- }
- return(
-  
-  <div style={{
-    width: '18rem',
-    margin: '10px', // Adds space between cards
-    backgroundColor: 'pink',
-    borderRadius: '8px', // Rounded corners
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Adds shadow
-  }}
-  key={element.id}>
-<div class="card" style={{width: "18rem" , backgroundColor: 'pink'}}>
-  <img src={element.imageUrl} class="card-img-top" />
-  <div class="card-body">
-    <h5 class="card-title">{element.name}</h5>
-    <p class="card-text">price :{element.price}</p>
-    <p class="card-text">quantity :{element.quantity}</p>
-    {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
-    <button onClick={()=>{handleDelete(element.id)}}>delete</button>
-<button onClick={()=>(hundelAll())}>update</button>
+    <div style={styles.container}>
+      {products.map((element) => {
+        const handleUpdateClick = () => {
+          getId(element.id);
+          changeView("update");
+        };
 
-  </div>
-</div>
-
-
-</div>
- )
-}
- )
- 
- }
-
-
-
+        return (
+          <div style={styles.card} key={element.id}>
+            <img src={element.imageUrl} alt={element.name} style={styles.image} />
+            <div style={styles.cardBody}>
+              <h5 style={styles.cardTitle}>{element.name}</h5>
+              <p style={styles.cardText}>Price: ${element.price}</p>
+              <p style={styles.cardText}>Quantity: {element.quantity}</p>
+              <div style={styles.buttonGroup}>
+                <button style={styles.deleteButton} onClick={() => handleDelete(element.id)}>
+                  Delete
+                </button>
+                <button style={styles.updateButton} onClick={handleUpdateClick}>
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
-  )
+  );
 }
 
-export default Listproducts
+// Inline styles
+const styles = {
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+    backgroundColor: '#f5f5f5', // Light gray background
+    padding: '20px',
+  },
+  card: {
+    width: '18rem',
+    margin: '10px',
+    backgroundColor: '#ffffff', // White background
+    borderRadius: '10px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', // Subtle shadow
+    overflow: 'hidden',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  },
+  cardHover: {
+    transform: 'translateY(-5px)',
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+  },
+  image: {
+    width: '100%',
+    height: '200px',
+    objectFit: 'cover', // Ensures the image covers the area
+  },
+  cardBody: {
+    padding: '15px',
+    textAlign: 'center',
+  },
+  cardTitle: {
+    fontSize: '20px',
+    fontWeight: '600',
+    color: '#333333', // Dark gray text
+    marginBottom: '10px',
+  },
+  cardText: {
+    fontSize: '16px',
+    color: '#555555', // Medium gray text
+    marginBottom: '10px',
+  },
+  buttonGroup: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '10px',
+  },
+  deleteButton: {
+    flex: 1,
+    padding: '10px',
+    border: 'none',
+    borderRadius: '6px',
+    backgroundColor: '#ff6b6b', // Soft red background
+    color: '#ffffff', // White text
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  },
+  deleteButtonHover: {
+    backgroundColor: '#ff4757', // Darker soft red on hover
+  },
+  updateButton: {
+    flex: 1,
+    padding: '10px',
+    border: 'none',
+    borderRadius: '6px',
+    backgroundColor: '#4b7bec', // Soft blue background
+    color: '#ffffff', // White text
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  },
+  updateButtonHover: {
+    backgroundColor: '#3867d6', // Darker soft blue on hover
+  },
+};
+
+export default Listproducts;
