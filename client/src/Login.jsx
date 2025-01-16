@@ -7,13 +7,12 @@ const Login = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Retrieve user data from local storage
     const savedEmail = localStorage.getItem('email');
     const savedPassword = localStorage.getItem('password');
 
     if (email === savedEmail && password === savedPassword) {
       alert('Login Successful!');
-      onLogin(); // Call the onLogin function to switcah to the home page
+      onLogin()
     } else {
       alert('Invalid email or password');
     }
